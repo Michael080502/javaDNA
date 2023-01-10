@@ -1,5 +1,7 @@
 package dna;
 
+import java.util.ArrayList;
+
 public class DNA {
 
 private String sequences ;
@@ -47,11 +49,6 @@ public int nucleotideCount(char c) {
     return numberTimes;
 }
 
-//  (A): 135.128
-//  (C): 111.103
-//  (G): 151.128
-//  (T): 125.107
-// : 100.000
 public double totalMass(){
     double totalMass=0;
     totalMass+=nucleotideCount('A')*135.128;
@@ -64,10 +61,27 @@ public double totalMass(){
 
 
 
+public ArrayList codonSet(){
+    ArrayList<String> allCodons = new ArrayList<String>();
+    for (int i=0; i<noJunk.length();i+=3){
+        allCodons.add(noJunk.substring(i,i+3));
+    }
+    return allCodons ;
+}
 
 
-
-
+public String mutateCodon(String originalCodon, String newCodon){
+    String newDna=noJunk; 
+    int i=newDna.indexOf(originalCodon);
+    String partOne=noJunk.substring(0, i);
+    String partTwo=noJunk.substring(i+3, noJunk.length());
+    newDna=partOne+newCodon+partTwo;
+    return newDna;
+}
 
     
+public String sequence(){
+return noJunk;
+}
+
 }

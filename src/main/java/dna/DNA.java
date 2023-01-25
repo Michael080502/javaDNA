@@ -1,6 +1,9 @@
 package dna;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+
+import javax.sound.midi.Sequence;
 
 public class DNA {
 
@@ -9,10 +12,14 @@ private String noJunk;
 private int amountJunk;
 public DNA (String initSequences){
     sequences=initSequences ;
-    noJunk=deleteJunk();
+    noJunk=deleteJunk(sequences);
+    if (noJunk.length()%3!=0){
+        throw new IllegalArgumentException("Invalid DNA sequence");
+    }
 }
 
-private String deleteJunk(){
+
+private String deleteJunk(String sequences){
 String noJunk="";
 for (int i=0; i<sequences.length();i++){
    if(sequences.charAt(i)=='A'||sequences.charAt(i)=='C'||sequences.charAt(i)=='T'||sequences.charAt(i)=='G'){
@@ -61,8 +68,8 @@ public double totalMass(){
 
 
 
-public ArrayList codonSet(){
-    ArrayList<String> allCodons = new ArrayList<String>();
+public HashSet codonSet(){
+    HashSet<String> allCodons = new HashSet<String>();
     for (int i=0; i<noJunk.length();i+=3){
         allCodons.add(noJunk.substring(i,i+3));
     }
@@ -70,18 +77,28 @@ public ArrayList codonSet(){
 }
 
 
-public String mutateCodon(String originalCodon, String newCodon){
-    String newDna=noJunk; 
+public void mutateCodon(String originalCodon, String newCodon){
+    if(deleteJunk(originalCodon).length()==3&&deleteJunk(newCodon).length()==3){
+        String newDna=noJunk; 
+        while(newDna.indexOf(originalCodon)!=-1){
     int i=newDna.indexOf(originalCodon);
-    String partOne=noJunk.substring(0, i);
-    String partTwo=noJunk.substring(i+3, noJunk.length());
+    String partOne=newDna.substring(0, i);
+    String partTwo=newDna.substring(i+3);
     newDna=partOne+newCodon+partTwo;
-    return newDna;
 }
+    sequences=newDna;
+    noJunk=newDna;
+
+}
+
+}
+
+
+
 
     
 public String sequence(){
-return noJunk;
+return sequences;
 }
 
 }

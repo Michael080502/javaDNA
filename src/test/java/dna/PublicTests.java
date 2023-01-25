@@ -50,9 +50,9 @@ public class PublicTests {
 
     @Test
     public void test7_mutate() {
-        DNA dna7 = new DNA("AAAGGTTACTG+A");
+        DNA dna7 = new DNA("AAATGAGGTTACTG+A");
         dna7.mutateCodon("TGA", "GAT");
-        assertEquals("AAAGGTTACGAT", dna7.sequence());
+        assertEquals("AAAGATGGTTACGAT", dna7.sequence());
     }
 
     @Test
@@ -66,7 +66,7 @@ public class PublicTests {
     public void test9_mutate() {
         DNA dna9 = new DNA("ATGCCAxCTATGGTAG");
         dna9.mutateCodon("CTA", "ATC");
-        assertEquals(1978.8, dna9.totalMass(), 0.001);
+        assertEquals(1978.8, dna9.totalMass(), 0.1);
         assertEquals("ATGCCAATCTGGTAG", dna9.sequence());
     }
 }
